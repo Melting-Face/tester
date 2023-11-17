@@ -1,0 +1,63 @@
+---
+version: "3.1"
+services:
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    env_file:
+      - ./envs/airflow.env
+    ports:
+      - 25432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  airflow-init:
+    command: db migrate
+    depends_on:
+      - db
+    env_file:
+      - ./envs/airflow.env
+    image: apache/airflow:latest
+    restart: "no"
+
+  airflow-webserver:
+    command: webserver
+    env_file:
+      - ./envs/airflow.env 
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    image: apache/airflow:latest
+    ports:
+      - 28080:8080
+    restart: unless-stopped
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+
+  airflow-scheduler:
+    command: scheduler
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    env_file:
+      - ./envs/airflow.env 
+    image: apache/airflow:latest
+    restart: unless-stopped
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+
+  airflow-triggerer:
+    command: triggerer
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    env_file:
+      - ./envs/airflow.env 
+    image: apache/airflow:latest
+    restart: unless-stopped
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
