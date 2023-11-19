@@ -28,7 +28,7 @@ services:
       - ./envs/airflow.env
     environment:
       _PIP_ADDITIONAL_REQUIREMENTS:
-        "astronomer-cosmos astronomer-cosmos[dbt-postgres]"
+        astronomer-cosmos astronomer-cosmos[dbt-postgres]
     depends_on:
       airflow-init:
         condition: service_completed_successfully
@@ -62,7 +62,7 @@ services:
       - ./envs/airflow.env
     environment:
       _PIP_ADDITIONAL_REQUIREMENTS:
-        "astronomer-cosmos astronomer-cosmos[dbt-postgres]"
+        astronomer-cosmos astronomer-cosmos[dbt-postgres]
     image: apache/airflow:latest
     restart: unless-stopped
     volumes:
