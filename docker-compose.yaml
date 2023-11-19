@@ -22,7 +22,8 @@ services:
     restart: "no"
 
   airflow-webserver:
-    command: webserver
+    command:
+      - webserver
     env_file:
       - ./envs/airflow.env
     environment:
