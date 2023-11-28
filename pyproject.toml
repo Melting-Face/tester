@@ -1,5 +1,16 @@
 [tool.ruff]
-extend-include = ["I", "C4", "C90", "COM", "FURB", "SIM", "PD", "Q", "AIR"]
+extend-include = [
+  "AIR",
+  "B",
+  "C4",
+  "C90",
+  "COM",
+  "FURB",
+  "I",
+  "PD",
+  "Q",
+  "SIM",
+]
 extend-ignore = ["PD901"]
 
 # sqlfluff
