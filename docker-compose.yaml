@@ -62,3 +62,11 @@ services:
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
+
+  spark-py:
+    image: apache/spark-py
+    command:
+      "/opt/spark/bin/spark-class org.apache.spark.deploy.master.Master"
+    ports:
+      - 58080:8080
+      - 57077:7077
