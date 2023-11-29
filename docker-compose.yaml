@@ -16,8 +16,6 @@ services:
     command: db migrate
     depends_on:
       - db
-    env_file:
-      - ./envs/airflow.env
     image: apache/airflow:latest
     restart: "no"
 
@@ -63,8 +61,8 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
 
-  spark-py:
-    image: apache/spark-py
+  spark:
+    image: spark
     command:
       "/opt/spark/bin/spark-class org.apache.spark.deploy.master.Master"
     ports:
