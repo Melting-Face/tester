@@ -62,9 +62,13 @@ services:
       - ./logs:/opt/airflow/logs
 
   spark:
-    image: spark
+    image: apache/spark-py
     command:
       "/opt/spark/bin/spark-class org.apache.spark.deploy.master.Master"
+    environment:
+      PYSPARK_SUBMIT_ARGS: "--master local[2]"
+    user: 0:0
     ports:
       - 58080:8080
       - 57077:7077
+      - 54040:4040
