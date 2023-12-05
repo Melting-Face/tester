@@ -7,10 +7,20 @@ data:
   POSTGRES_DB: airflow
   POSTGRES_PASSWORD: "1234"
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: airflow-config
+data:
+  AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: "postgresql+psycopg2://postgres:1234@postgres:5432/airflow"
+  _AIRFLOW_WWW_USER_CREATE: "True"
+  _AIRFLOW_WWW_USER_USERNAME: "admin"
+  _AIRFLOW_WWW_USER_PASSWORD: "test1234"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres-deployment
+  name: postgres
   labels:
     app: postgres
 spec:
@@ -30,3 +40,41 @@ spec:
                 name: postgres-config
           ports:
             - containerPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airflow
+  labels:
+    app: airflow
+spec:
+  selector:
+    matchLabels:
+      app: airflow
+  template:
+    metadata:
+      labels:
+        app: airflow
+    spec:
+      containers:
+        - name: airflow
+          image: apache/airflow
+          envFrom:
+            - configMapRef:
+                name: airflow-config
+          command:
+            - "webserver"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: postgres
