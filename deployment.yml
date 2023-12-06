@@ -75,7 +75,7 @@ spec:
             - containerPort: 8080
 
 # Services
---- 
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -96,6 +96,6 @@ metadata:
     app: airflow-webserver
 spec:
   ports:
-    - port: 5432
+    - port: 8080
   selector:
     app: airflow-webserver
