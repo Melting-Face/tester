@@ -1,3 +1,4 @@
+# ConfigMap
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -12,10 +13,13 @@ kind: ConfigMap
 metadata:
   name: airflow-config
 data:
-  AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: "postgresql+psycopg2://postgres:1234@postgres:5432/airflow"
-  _AIRFLOW_WWW_USER_CREATE: "True"
+  AIRFLOW__DATABASE__SQL_ALCHEMY_CONN:
+    "postgresql+psycopg2://postgres:1234@postgres:5432/airflow"
+  _AIRFLOW_WWW_USER_CREATE: "true"
   _AIRFLOW_WWW_USER_USERNAME: "admin"
   _AIRFLOW_WWW_USER_PASSWORD: "test1234"
+
+# Deployment
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -46,15 +50,15 @@ kind: Deployment
 metadata:
   name: airflow
   labels:
-    app: airflow
+    app: airflow-webserver
 spec:
   selector:
     matchLabels:
-      app: airflow
+      app: airflow-webserver
   template:
     metadata:
       labels:
-        app: airflow
+        app: airflow-webserver
     spec:
       containers:
         - name: airflow
@@ -62,11 +66,16 @@ spec:
           envFrom:
             - configMapRef:
                 name: airflow-config
-          command:
-            - "webserver"
+          command: ["bash", "-c"]
+          args:
+            - |
+              airflow db migrate
+              airflow webserver
           ports:
             - containerPort: 8080
----
+
+# Services
+--- 
 apiVersion: v1
 kind: Service
 metadata:
@@ -78,3 +87,15 @@ spec:
     - port: 5432
   selector:
     app: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airflow
+  labels:
+    app: airflow-webserver
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: airflow-webserver
