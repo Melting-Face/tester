@@ -33,6 +33,7 @@ kind: ConfigMap
 metadata:
   name: airflow-config
 data:
+  AIRFLOW_UID: "0"
   AIRFLOW__CORE__EXECUTOR: KubernetesExecutor
 # Job
 ---
@@ -120,6 +121,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: airflow-connect
+            - configMapRef:
+                name: airflow-config
           command: ["bash", "-c"]
           args:
             - "airflow webserver"
