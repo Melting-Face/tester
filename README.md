@@ -14,6 +14,13 @@ brew install minikube
 
 minikube start --kubernetes-version=v1.28
 
+minikube addons list
+
+# dash board
+minikube addons enable metrics-server
+
+minikube addons enable dashboard
+
 minikube delete
 ```
 
