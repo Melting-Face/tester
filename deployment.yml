@@ -133,11 +133,17 @@ spec:
           volumeMounts:
             - mountPath: /opt/airflow/dags
               name: dags
+            - mountPath: /opt/airflow/requirements.txt
+              name: requirements
       volumes:
         - name: dags
           hostPath:
             path: /host/dags
             type: Directory
+        - name: requirements
+          hostPath:
+            path: /host/requirements.txt
+            type: File
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -169,11 +175,17 @@ spec:
           volumeMounts:
             - mountPath: /opt/airflow/dags
               name: dags
+            - mountPath: /opt/airflow/requirements.txt
+              name: requirements
       volumes:
         - name: dags
           hostPath:
             path: /host/dags
             type: Directory
+        - name: requirements
+          hostPath:
+            path: /host/requirements.txt
+            type: File
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -205,11 +217,17 @@ spec:
           volumeMounts:
             - mountPath: /opt/airflow/dags
               name: dags
+            - mountPath: /opt/airflow/requirements.txt
+              name: requirements
       volumes:
         - name: dags
           hostPath:
             path: /host/dags
             type: Directory
+        - name: requirements
+          hostPath:
+            path: /host/requirements.txt
+            type: File
 # Services
 ---
 apiVersion: v1
