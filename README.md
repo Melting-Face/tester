@@ -12,7 +12,7 @@ pre-commit install
 ```shell
 brew install minikube
 
-minikube start --kubernetes-version=v1.28
+minikube start --mount --mount-string="$PWD:/host" --driver=docker
 
 minikube addons list
 

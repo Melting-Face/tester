@@ -34,6 +34,7 @@ metadata:
   name: airflow-config
 data:
   AIRFLOW_UID: "0"
+  AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
   AIRFLOW__CORE__EXECUTOR: KubernetesExecutor
 # Job
 ---
@@ -97,7 +98,7 @@ spec:
       volumes:
         - name: data
           hostPath:
-            path: /Users/jinsukim/tester/data
+            path: /host/data
             type: DirectoryOrCreate
 ---
 apiVersion: apps/v1
@@ -134,7 +135,8 @@ spec:
       volumes:
         - name: dags
           hostPath:
-            path: /Users/jinsukim/tester/dags
+            path: /host/dags
+            type: Directory
 # Services
 ---
 apiVersion: v1
