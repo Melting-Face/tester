@@ -126,8 +126,9 @@ spec:
                 name: airflow-config
           command: ["bash", "-c"]
           args:
-            - "pip install -r requirements.txt"
-            - "airflow webserver"
+            - |
+              pip install -r requirements.txt
+              airflow webserver
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -170,8 +171,9 @@ spec:
                 name: airflow-config
           command: ["bash", "-c"]
           args:
-            - "pip install -r requirements.txt"
-            - "airflow scheduler"
+            - |
+              pip install -r requirements.txt
+              airflow scheduler
           volumeMounts:
             - mountPath: /opt/airflow/dags
               name: dags
@@ -212,8 +214,9 @@ spec:
                 name: airflow-config
           command: ["bash", "-c"]
           args:
-            - "pip install -r requirements.txt"
-            - "airflow triggerer"
+            - |
+              pip install -r requirements.txt
+              airflow triggerer
           volumeMounts:
             - mountPath: /opt/airflow/dags
               name: dags
