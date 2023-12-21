@@ -26,12 +26,14 @@ minikube delete
 ```
 
 ### helm
+- `--debug`: helm Chart logging
+- `--namespace` or `-n`: namespace
 ```shell
 helm repo add apache-airflow https://airflow.apache.org
 
 helm upgrade --install airflow apache-airflow/airflow --namespace airflow --create-namespace
 
-helm upgrade --install airflow apache-airflow/airflow -n transformer -f values.yaml --debug
+helm upgrade --install airflow apache-airflow/airflow -n transformer -f values.yaml
 
 # Uninstall
 helm delete airflow --namespace airflow
@@ -40,7 +42,7 @@ helm delete airflow --namespace airflow
 
 ### kubectl
 ```shell
-kubectl port-forward <service-name> <local-port>:<container-port>
+kubectl port-forward svc/airflow-webserver 8080:8080 --namespace airflow
 
 kubectl get all
 ```
