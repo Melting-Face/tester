@@ -80,7 +80,7 @@ airflowVersion: "2.7.1"
 images:
   airflow:
     repository: ~
-    tag: ~
+    tag: dbt
     # Specifying digest takes precedence over tag.
     digest: ~
     pullPolicy: IfNotPresent
