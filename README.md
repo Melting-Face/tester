@@ -28,12 +28,15 @@ minikube delete
 ### helm
 - `--debug`: helm Chart logging
 - `--namespace` or `-n`: namespace
+- `--create-namespace`: if namaspace is not existed, create namespace
 ```shell
 helm repo add apache-airflow https://airflow.apache.org
 
-helm upgrade --install airflow apache-airflow/airflow --namespace airflow --create-namespace
+# default airflow
+helm upgrade --install airflow apache-airflow/airflow --namespace airflow
 
-helm upgrade --install airflow apache-airflow/airflow -n transformer -f values.yaml
+# custom airflow
+helm upgrade --install airflow apache-airflow/airflow -n airflow -f values.yaml
 
 # Uninstall
 helm delete airflow --namespace airflow
@@ -42,7 +45,7 @@ helm delete airflow --namespace airflow
 
 ### kubectl
 ```shell
-kubectl port-forward svc/airflow-webserver 8080:8080 --namespace airflow
+kubectl port-forward svc/airflow-webserver 8080:8080 -n airflow
 
-kubectl get all
+kubectl get -n airflow all
 ```

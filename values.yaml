@@ -261,7 +261,7 @@ rbac:
 
 # Airflow executor
 # One of: LocalExecutor, LocalKubernetesExecutor, CeleryExecutor, KubernetesExecutor, CeleryKubernetesExecutor
-executor: "CeleryExecutor"
+executor: "KubernetesExecutor"
 
 # If this is true and using LocalExecutor/KubernetesExecutor/CeleryKubernetesExecutor, the scheduler's
 # service account will have access to communicate with the api-server and launch pods.
@@ -275,10 +275,16 @@ env: []
 #   value: ""
 
 # Volumes for all airflow containers
-volumes: []
+volumes:
+  - name: dags
+    hostPath:
+      path: /host/dags
+      type: Directory
 
 # VolumeMounts for all airflow containers
-volumeMounts: []
+volumeMounts:
+  - mountPath: /opt/airflow/dags
+    name: dags
 
 # Secrets for all airflow containers
 secret: []
