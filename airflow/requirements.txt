@@ -1,3 +1,5 @@
+apache-airflow==2.8.0
 dbt-core
+dbt-spark
 dbt-postgres
 astronomer-cosmos
