@@ -1,4 +1,4 @@
-apache-airflow==2.8.0
+apache-airflow==2.7.3
 dbt-core
 dbt-spark
 dbt-postgres
